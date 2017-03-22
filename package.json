@@ -1,0 +1,27 @@
+{
+  "name": "@helios-interactive/crow",
+  "version": "1.0.1",
+  "description": "JS logging client",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha",
+    "build": "grunt build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://helios-stash.heliosinteractive.com:7991/projects/HI/repos/js-log-client/browse"
+  },
+  "author": "Adam McFadden",
+  "license": "ISC",
+  "dependencies": {
+    "grunt": "^1.0.1",
+    "grunt-contrib-connect": "^1.0.2",
+    "grunt-contrib-jshint": "^1.1.0",
+    "grunt-contrib-uglify": "^2.2.0",
+    "grunt-contrib-watch": "^1.0.0",
+    "grunt-mocha-test": "^0.13.2",
+    "load-grunt-tasks": "^3.5.2",
+    "mocha": "^3.2.0",
+    "should": "^11.2.1"
+  }
+}
