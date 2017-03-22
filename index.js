@@ -29,8 +29,6 @@ var crow = function(level, message) {
     message: message
   });
 
-  // Log to the console.
-  // TODO restrict this to web only
   var consoleMessage = level.toUpperCase() + ' - ' + message;
 
   switch(level){

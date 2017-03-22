@@ -3,10 +3,22 @@ export var crow = (function() {
  "use strict";
 
 var request = function(uri, body) {
-    return function(uri, body) {
+    return "undefined" != typeof XMLHttpRequest ? function(uri, body) {
         var oReq = new XMLHttpRequest();
         oReq.open("POST", uri), oReq.setRequestHeader("Content-Type", "application/json"), 
         oReq.send(JSON.stringify(body));
+    }(uri, body) : function(uri, body) {
+        var url = require("url"), parsedUrl = url.parse(uri), http = require("https:" === parsedUrl.protocol ? "https" : "http"), options = {
+            host: parsedUrl.hostname,
+            protocol: parsedUrl.protocol,
+            port: parsedUrl.port,
+            path: parsedUrl.path,
+            headers: {
+                "Content-Type": "application/json"
+            },
+            method: "POST"
+        }, req = http.request(options);
+        req.write(JSON.stringify(body)), req.end();
     }(uri, body);
 }, request, _url, _application, crow = function(level, message) {
     if (!_url) throw new Error("set the url for crow with crow.setUrl(<url>)");
