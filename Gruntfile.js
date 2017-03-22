@@ -10,14 +10,14 @@ module.exports = function( grunt ) {
     var root = (typeof self == 'object' && self.self === self && self) ||
         (typeof module == 'object' && module);
 
-    // Set up reach appropriately for the environment. Start with AMD.
+    // Set up crow appropriately for the environment. Start with AMD.
     if (typeof define === 'function' && define.amd) {
-      define('reach', ['exports'], function(exports) {
+      define('crow', ['exports'], function(exports) {
         // Export global even in AMD case in case this script is loaded with
-        // others that may still expect a global reach.
-        root.reach = factory();
-        // return reach for correct AMD use
-        return root.reach;
+        // others that may still expect a global crow.
+        root.crow = factory();
+        // return crow for correct AMD use
+        return root.crow;
       });
 
       // Next for Node.js or CommonJS.
@@ -25,14 +25,14 @@ module.exports = function( grunt ) {
         root.exports = factory();
       // Finally, as a browser global.
     } else {
-      root.reach = factory();
+      root.crow = factory();
     }
 
   })(function() {
   `;
 
   var footer = `
-    return reach;
+    return crow;
   });`;
 
   
@@ -55,35 +55,35 @@ module.exports = function( grunt ) {
         semicolons: false,
         quote_style: 1,
         wrap: false,
-        banner: "/*Reach Client v"+pkg.version+"*/\n" + banner,
+        banner: "/*Crow Client v"+pkg.version+"*/\n" + banner,
         footer: footer
       },
-      reach: {
+      crow: {
         options: {
         },
         files: {
-          'dist/reach.js': ['./lib/merge.js','./lib/image.js','./lib/request.js', 'index.js']
+          'dist/crow.js': ['./lib/merge.js','./lib/image.js','./lib/request.js', 'index.js']
         }
       },
-      reachmodule: {
+      crowmodule: {
         options: {
-          banner: "/*Reach Client ES6 Module v"+pkg.version+"*/\nexport var reach = (function() {\n ",
+          banner: "/*Crow Client ES6 Module v"+pkg.version+"*/\nexport var crow = (function() {\n ",
           footer:`
-    return reach;
+    return crow;
   })();`
         },
         files: {
-          'dist/reach.module.js': ['./lib/merge.js','./lib/image.js','./lib/request.js', 'index.js']
+          'dist/crow.module.js': ['./lib/merge.js','./lib/image.js','./lib/request.js', 'index.js']
         }
       },
-      reachmin: {
+      crowmin: {
         options: {
           drop_console: true,
           mangle: true,
           beautify: false
         },
         files: {
-          'dist/reach.min.js': ['./lib/request.js', 'index.js']
+          'dist/crow.min.js': ['./lib/request.js', 'index.js']
         }
       }
     },
@@ -109,7 +109,7 @@ module.exports = function( grunt ) {
     },
     watch: {
       files: [ "<%= jshint.all.src %>" ],
-      tasks: [ "jshint:all", "uglify:reach" ]
+      tasks: [ "jshint:all", "uglify:crow" ]
     }
   });
 
