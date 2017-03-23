@@ -1,6 +1,6 @@
 {
   "name": "@helios-interactive/crow",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "JS logging client",
   "main": "index.js",
   "scripts": {
