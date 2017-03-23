@@ -94,9 +94,13 @@ crow.warn("A message to be logged to woodpecker")
 
 #### debug(message)
 > Sends an DEBUG log to woodpecker
+>
 > ##### Parameters 
+>
 > *message* - The log message to be sent.
+>
 > ##### Usage
+>
 > `crow.debug('An debug log message.')`
 
 #### warn(message)
