@@ -63,6 +63,7 @@ crow.debug = function (message) {
 crow.info = function (message) {
   crow('info', message);
 };
+crow.log = crow.info;
 crow.warn = function (message) {
   crow('warn', message);
 };

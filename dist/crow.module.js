@@ -1,4 +1,4 @@
-/*Crow Client ES6 Module v1.0.0*/
+/*Crow Client ES6 Module v1.0.2*/
 export var crow = (function() {
  "use strict";
 
@@ -60,7 +60,7 @@ crow.setUrl = function(url) {
     crow("debug", message);
 }, crow.info = function(message) {
     crow("info", message);
-}, crow.warn = function(message) {
+}, crow.log = crow.info, crow.warn = function(message) {
     crow("warn", message);
 }, crow.error = function(message) {
     crow("error", message);

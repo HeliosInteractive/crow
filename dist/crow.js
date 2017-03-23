@@ -1,4 +1,4 @@
-/*Crow Client v1.0.0*/
+/*Crow Client v1.0.2*/
 (function(factory) {
     
     // Establish the root object, window (self) in the browser, or global on the server.
@@ -85,7 +85,7 @@ crow.setUrl = function(url) {
     crow("debug", message);
 }, crow.info = function(message) {
     crow("info", message);
-}, crow.warn = function(message) {
+}, crow.log = crow.info, crow.warn = function(message) {
     crow("warn", message);
 }, crow.error = function(message) {
     crow("error", message);
