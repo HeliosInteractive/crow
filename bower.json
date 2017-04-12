@@ -1,0 +1,7 @@
+{
+  "name": "crow",
+  "homepage": "http://helios-stash.heliosinteractive.com:7991/projects/HI/repos/js-log-client/browse",
+  "version": "2.1.1",
+  "main": "dist/crow.js",
+  "jsnext:main": "dist/crow.module.js"
+}

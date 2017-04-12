@@ -8,7 +8,7 @@ var _url, _application;
  * @param {string} level
  * @param {string} message
  */
-var crow = function(level, message) {
+var crow = function(level) {
 
   if(!_url)
     throw new Error('set the url for crow with crow.setUrl(<url>)');
@@ -16,11 +16,16 @@ var crow = function(level, message) {
   if(!_application)
     throw new Error('set the application for crow with crow.setApplication(<application>)');
 
-  if(!message)
-    throw new Error('log must contain a message');
-
   if(!level)
     console.warn('no log level specified. Defaulting to info');//jshint ignore:line
+
+  let message = Array.from(arguments).slice(1).reduce((last, next) => {
+    if( typeof next !== 'object') return String.prototype.concat(last, ' ', next);
+    return String.prototype.concat(last, ' ', JSON.stringify(next, null, 0));
+  }, '');
+
+  if(!message)
+    throw new Error('log must contain a message');
 
   // Log to the log server
   request(_url, {
