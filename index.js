@@ -62,19 +62,19 @@ crow.setApplication = function(application) {
   _application = application;
 };
 
-crow.debug = function (message) {
-  crow('debug', message);
+crow.debug = function () {
+  crow('debug', arguments);
 };
-crow.info = function (message) {
-  crow('info', message);
+crow.info = function () {
+  crow('info', arguments);
 };
 crow.log = crow.info;
-crow.warn = function (message) {
-  crow('warn', message);
+crow.warn = function () {
+  crow('warn', arguments);
 };
-crow.error = function (message) {
-  crow('error', message);
+crow.error = function () {
+  crow('error', arguments);
 };
-crow.fatal = function (message) {
-  crow('fatal', message);
+crow.fatal = function () {
+  crow('fatal', arguments);
 };
