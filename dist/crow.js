@@ -1,4 +1,4 @@
-/*Crow Client v1.0.2*/
+/*Crow Client v1.0.4*/
 (function(factory) {
     
     // Establish the root object, window (self) in the browser, or global on the server.
@@ -25,7 +25,9 @@
     }
 
   })(function() {
-  "use strict";
+
+
+"use strict";
 
 var request = function(uri, body) {
     return "undefined" != typeof XMLHttpRequest ? function(uri, body) {
@@ -45,11 +47,15 @@ var request = function(uri, body) {
         }, req = http.request(options);
         req.write(JSON.stringify(body)), req.end();
     }(uri, body);
-}, request, _url, _application, crow = function(level, message) {
+}, request, _url, _application, crow = function(level) {
     if (!_url) throw new Error("set the url for crow with crow.setUrl(<url>)");
     if (!_application) throw new Error("set the application for crow with crow.setApplication(<application>)");
+    level || console.warn("no log level specified. Defaulting to info");
+    var message = Array.from(arguments).slice(1).reduce(function(last, next) {
+        return "object" != typeof next ? String.prototype.concat(last, " ", next) : String.prototype.concat(last, " ", JSON.stringify(next, null, 0));
+    }, "");
     if (!message) throw new Error("log must contain a message");
-    level || console.warn("no log level specified. Defaulting to info"), request(_url, {
+    request(_url, {
         application: _application,
         level: level,
         message: message
@@ -57,9 +63,6 @@ var request = function(uri, body) {
     var consoleMessage = level.toUpperCase() + " - " + message;
     switch (level) {
       case "fatal":
-        console.error(consoleMessage);
-        break;
-
       case "error":
         console.error(consoleMessage);
         break;

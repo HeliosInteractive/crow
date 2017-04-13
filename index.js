@@ -19,7 +19,7 @@ var crow = function(level) {
   if(!level)
     console.warn('no log level specified. Defaulting to info');//jshint ignore:line
 
-  let message = Array.from(arguments).slice(1).reduce((last, next) => {
+  var message = Array.from(arguments).slice(1).reduce(function(last, next){
     if( typeof next !== 'object') return String.prototype.concat(last, ' ', next);
     return String.prototype.concat(last, ' ', JSON.stringify(next, null, 0));
   }, '');
