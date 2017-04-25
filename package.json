@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "http://helios-stash.heliosinteractive.com:7991/projects/HI/repos/js-log-client/browse"
+    "url": "https://github.com/HeliosInteractive/crow"
   },
   "author": "Adam McFadden",
   "license": "ISC",
