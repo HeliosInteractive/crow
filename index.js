@@ -8,7 +8,7 @@ var _url, _application;
  * @param {string} level
  * @param {string} message
  */
-var crow = function(level, message) {
+var crow = function(level) {
 
   if(!_url)
     throw new Error('set the url for crow with crow.setUrl(<url>)');
@@ -16,11 +16,16 @@ var crow = function(level, message) {
   if(!_application)
     throw new Error('set the application for crow with crow.setApplication(<application>)');
 
-  if(!message)
-    throw new Error('log must contain a message');
-
   if(!level)
     console.warn('no log level specified. Defaulting to info');//jshint ignore:line
+
+  var message = Array.from(arguments).slice(1).reduce(function(last, next){
+    if( typeof next !== 'object') return String.prototype.concat(last, ' ', next);
+    return String.prototype.concat(last, ' ', JSON.stringify(next, null, 0));
+  }, '');
+
+  if(!message)
+    throw new Error('log must contain a message');
 
   // Log to the log server
   request(_url, {
@@ -57,19 +62,19 @@ crow.setApplication = function(application) {
   _application = application;
 };
 
-crow.debug = function (message) {
-  crow('debug', message);
+crow.debug = function () {
+  crow('debug', arguments);
 };
-crow.info = function (message) {
-  crow('info', message);
+crow.info = function () {
+  crow('info', arguments);
 };
 crow.log = crow.info;
-crow.warn = function (message) {
-  crow('warn', message);
+crow.warn = function () {
+  crow('warn', arguments);
 };
-crow.error = function (message) {
-  crow('error', message);
+crow.error = function () {
+  crow('error', arguments);
 };
-crow.fatal = function (message) {
-  crow('fatal', message);
+crow.fatal = function () {
+  crow('fatal', arguments);
 };

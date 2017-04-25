@@ -2,7 +2,8 @@
   "name": "@helios-interactive/crow",
   "version": "1.0.4",
   "description": "JS logging client",
-  "main": "index.js",
+  "main": "dist/crow.js",
+  "jsnext:main": "dist/crow.module.js",
   "scripts": {
     "test": "mocha",
     "build": "grunt build"
