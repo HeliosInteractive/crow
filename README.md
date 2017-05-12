@@ -11,7 +11,7 @@ npm install @helios-interactive/crow --save
 #### Node / Commonjs
 
 ```
-var crow = require("crow");
+var crow = require("@helios-interactive/crow");
 crow.setUrl("<url of woodpecker>");
 crow.setApplication = "<application name>";
 crow.warn("A message to be logged to woodpecker")
@@ -39,7 +39,7 @@ define(['crow'], function (crow) {
 
 #### Module
 ```
-import { crow } from 'crow';
+import crow from '@helios-interactive/crow';
 
 crow.setUrl("<url of woodpecker>");
 crow.setApplication = "<application name>";
