@@ -1,4 +1,4 @@
-/*Crow Client ES6 Module v1.0.4*/
+/*Crow Client ES6 Module v1.0.5*/
 export var crow = (function() {
 
 

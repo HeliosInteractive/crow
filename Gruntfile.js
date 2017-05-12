@@ -62,7 +62,7 @@ module.exports = function( grunt ) {
         options: {
         },
         files: {
-          'dist/crow.js': ['./lib/merge.js','./lib/image.js','./lib/request.js', 'index.js']
+          'dist/crow.js': ['./lib/request.js', 'index.js']
         }
       },
       crowmodule: {
@@ -73,7 +73,7 @@ module.exports = function( grunt ) {
   })();`
         },
         files: {
-          'dist/crow.module.js': ['./lib/merge.js','./lib/image.js','./lib/request.js', 'index.js']
+          'dist/crow.module.js': ['./lib/request.js', 'index.js']
         }
       },
       crowmin: {

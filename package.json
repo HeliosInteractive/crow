@@ -4,6 +4,7 @@
   "description": "JS logging client",
   "main": "dist/crow.js",
   "jsnext:main": "dist/crow.module.js",
+  "module": "dist/crow.module.js",
   "scripts": {
     "test": "mocha",
     "build": "grunt build"
