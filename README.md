@@ -188,20 +188,20 @@ crow.warn("A message to be logged to woodpecker")
 #### Node Only
 
 #### crow.onSuccess = *callback*;
-> Allows setting a callback function to call whenever crow gets a successful response from Woodpecker
+> Property that allows setting a callback function to call whenever crow receives a successful response from Woodpecker
 >
-> ##### Arguments
+> ##### Callback Arguments
 >
-> *data* - Object containing statusCode, StatusMessage, uri, and body sent with request
+> *data* - Object containing `statusCode`, `statusMessage`, `uri`, and `body` sent with request
 >
 > ##### Usage
 >
 > `crow.onSuccess = function(data){console.log(data)};`
 
 #### crow.onFailure = *callback*;
-> Allows setting a callback function to call whenever crow throw's an error when attempting to make a request to Woodpecker
+> Property that allows setting a callback function to call whenever crow throws an error when attempting to make a request to Woodpecker
 >
-> ##### Arguments
+> ##### Callback Arguments
 >
 > *err* - error object with err.message including attempted payload message
 >
