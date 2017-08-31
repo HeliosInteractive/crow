@@ -1,4 +1,4 @@
-/*Crow Client v1.0.7*/
+/*Crow Client v1.0.8*/
 (function(factory) {
     
     // Establish the root object, window (self) in the browser, or global on the server.

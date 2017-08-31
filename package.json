@@ -1,6 +1,6 @@
 {
   "name": "@helios-interactive/crow",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "JS logging client",
   "main": "dist/crow.js",
   "jsnext:main": "dist/crow.module.js",
