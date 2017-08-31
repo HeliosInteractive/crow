@@ -187,7 +187,7 @@ crow.warn("A message to be logged to woodpecker")
 
 #### Node Only
 
-#### crow.onSuccess = function(data){console.log(data)};
+#### crow.onSuccess = *callback*;
 > Allows setting a callback function to call whenever crow gets a successful response from Woodpecker
 >
 > ##### Arguments
@@ -198,7 +198,7 @@ crow.warn("A message to be logged to woodpecker")
 >
 > `crow.onSuccess = function(data){console.log(data)};`
 
-#### crow.onFailure = function(err){console.error(err)};
+#### crow.onFailure = *callback*;
 > Allows setting a callback function to call whenever crow throw's an error when attempting to make a request to Woodpecker
 >
 > ##### Arguments
