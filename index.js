@@ -2,6 +2,7 @@
 
 var request;
 var _url, _application;
+var _onSuccess, _onFailure;
 
 /**
  * Send logs to woodpecker log server
@@ -32,7 +33,7 @@ var crow = function(level) {
     application: _application,
     level: level,
     message: message
-  });
+  }, _onSuccess, _onFailure);
 
   var consoleMessage = level.toUpperCase() + ' - ' + message;
 
@@ -78,3 +79,16 @@ crow.error = function () {
 crow.fatal = function () {
   crow('fatal', arguments);
 };
+
+Object.defineProperty(crow, 'onSuccess', {
+  set: function(func) {
+    _onSuccess = func;
+  }
+});
+
+Object.defineProperty(crow, 'onFailure', {
+  set: function(func) {
+    _onFailure = func;
+  }
+});
+

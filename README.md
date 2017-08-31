@@ -182,3 +182,29 @@ crow.warn("A message to be logged to woodpecker")
 > `crow.fatal('An fatal log message.', 'with multiple arguments')`
 >
 > `crow.fatal('An fatal log message.', 'with multiple arguments', ['of', 'different', 'types'])`
+
+## Life Cycle Callback Functions
+
+#### Node Only
+
+#### crow.onSuccess = function(data){console.log(data)};
+> Allows setting a callback function to call whenever crow gets a successful response from Woodpecker
+>
+> ##### Arguments
+>
+> *data* - Object containing statusCode, StatusMessage, uri, and body sent with request
+>
+> ##### Usage
+>
+> `crow.onSuccess = function(data){console.log(data)};`
+
+#### crow.onFailure = function(err){console.error(err)};
+> Allows setting a callback function to call whenever crow throw's an error when attempting to make a request to Woodpecker
+>
+> ##### Arguments
+>
+> *err* - error object with err.message including attempted payload message
+>
+> ##### Usage
+>
+> `crow.onFailure = function(err){console.error(err); console.log(err.message);};`
