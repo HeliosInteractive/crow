@@ -39,7 +39,7 @@ define(['crow'], function (crow) {
 
 #### Module
 ```
-import crow from '@helios-interactive/crow';
+import { crow } from '@helios-interactive/crow';
 
 crow.setUrl("<url of woodpecker>");
 crow.setApplication = "<application name>";
