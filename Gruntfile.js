@@ -69,8 +69,8 @@ module.exports = function( grunt ) {
         options: {
           banner: "/*Crow Client ES6 Module v"+pkg.version+"*/\nexport var crow = (function() {\n ",
           footer:`
-    return crow;
-  })();`
+            return crow;
+          })();`
         },
         files: {
           'dist/crow.module.js': ['./lib/request.js', 'index.js']

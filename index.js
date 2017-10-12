@@ -3,6 +3,7 @@
 var request;
 var _url, _application;
 var _onSuccess, _onFailure;
+var _devMode = false;
 
 /**
  * Send logs to woodpecker log server
@@ -11,10 +12,10 @@ var _onSuccess, _onFailure;
  */
 var crow = function(level) {
 
-  if(!_url)
+  if(!_url && !_devMode)
     throw new Error('set the url for crow with crow.setUrl(<url>)');
 
-  if(!_application)
+  if(!_application && !_devMode)
     throw new Error('set the application for crow with crow.setApplication(<application>)');
 
   if(!level)
@@ -61,6 +62,11 @@ crow.setUrl = function(url) {
 
 crow.setApplication = function(application) {
   _application = application;
+};
+
+crow.setDevMode = function(devMode = false) {
+  console.warn('Warning: Crow has been set to dev mode. Logs will not be sent to woodpecker, and will only be logged to the console. This is your only warning.'); //jshint ignore:line
+  _devMode = devMode;
 };
 
 crow.debug = function () {
