@@ -29,12 +29,14 @@ var crow = function(level) {
   if(!message)
     throw new Error('log must contain a message');
 
-  // Log to the log server
-  request(_url, {
-    application: _application,
-    level: level,
-    message: message
-  }, _onSuccess, _onFailure);
+  // Log to woodpecker if not in dev mode
+  if(!_devMode) {
+    request(_url, {
+      application: _application,
+      level: level,
+      message: message
+    }, _onSuccess, _onFailure);
+  }
 
   var consoleMessage = level.toUpperCase() + ' - ' + message;
 
@@ -64,8 +66,15 @@ crow.setApplication = function(application) {
   _application = application;
 };
 
-crow.setDevMode = function(devMode = false) {
-  console.warn('Warning: Crow has been set to dev mode. Logs will not be sent to woodpecker, and will only be logged to the console. This is your only warning.'); //jshint ignore:line
+crow.setDevMode = function(devMode) {
+  if(typeof devMode !== 'boolean') {
+    console.warn('setDevMode accepts a boolean value only. Leaving at default of false.');//jshint ignore:line
+    return;
+  }
+
+  if(devMode) {
+    console.warn('Warning: Crow has been set to dev mode. Logs will not be sent to woodpecker, and will only be logged to the console. This is your only warning.'); //jshint ignore:line
+  }
   _devMode = devMode;
 };
 

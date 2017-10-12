@@ -70,6 +70,16 @@ crow.warn("A message to be logged to woodpecker")
 >
 > `crow.setApplication('Foobar')`
 
+#### setDevMode(devMode)
+> Sets crow into dev mode. When in dev mode crow will not attempt to log to woodpecker, and will instead only log to console. This can be used in development, but should not be used in production.
+>
+> ##### Parameters
+>
+> *devMode* - Boolean - true will set crow to devMode. false will set crow back to normal so that it logs to woodpecker. By default crow is not in devMode.
+>
+> ##### Usage
+>
+> `crow.setDevMode(true)`
 
 #### info([data][, ...args])
 > Sends an INFO log to woodpecker

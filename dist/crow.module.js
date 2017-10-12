@@ -7,7 +7,9 @@ export var crow = (function() {
 var request = function(uri, body, onSuccess, onFailure) {
     return "undefined" != typeof XMLHttpRequest ? function(uri, body) {
         var oReq = new XMLHttpRequest();
-        oReq.open("POST", uri), oReq.setRequestHeader("Content-Type", "application/json"), 
+        oReq.on("error", function(error) {
+            console.error("Error connecting to woodpecker", error);
+        }), oReq.open("POST", uri), oReq.setRequestHeader("Content-Type", "application/json"), 
         oReq.send(JSON.stringify(body));
     }(uri, body) : function(uri, body) {
         var url = require("url"), parsedUrl = url.parse(uri), http = require("https:" === parsedUrl.protocol ? "https" : "http"), options = {
@@ -32,15 +34,15 @@ var request = function(uri, body, onSuccess, onFailure) {
             onFailure(err)) : console.error(err);
         }), req.write(JSON.stringify(body)), req.end();
     }(uri, body);
-}, request, _url, _application, _onSuccess, _onFailure, crow = function(level) {
-    if (!_url) throw new Error("set the url for crow with crow.setUrl(<url>)");
-    if (!_application) throw new Error("set the application for crow with crow.setApplication(<application>)");
+}, request, _url, _application, _onSuccess, _onFailure, _devMode = !1, crow = function(level) {
+    if (!_url && !_devMode) throw new Error("set the url for crow with crow.setUrl(<url>)");
+    if (!_application && !_devMode) throw new Error("set the application for crow with crow.setApplication(<application>)");
     level || console.warn("no log level specified. Defaulting to info");
     var message = Array.from(arguments).slice(1).reduce(function(last, next) {
         return "object" != typeof next ? String.prototype.concat(last, " ", next) : String.prototype.concat(last, " ", JSON.stringify(next, null, 0));
     }, "");
     if (!message) throw new Error("log must contain a message");
-    request(_url, {
+    _devMode || request(_url, {
         application: _application,
         level: level,
         message: message
@@ -69,6 +71,10 @@ crow.setUrl = function(url) {
     _url = url;
 }, crow.setApplication = function(application) {
     _application = application;
+}, crow.setDevMode = function(devMode) {
+    if ("boolean" != typeof devMode) return void console.warn("setDevMode accepts a boolean value only. Leaving at default of false.");
+    devMode && console.warn("Warning: Crow has been set to dev mode. Logs will not be sent to woodpecker, and will only be logged to the console. This is your only warning."), 
+    _devMode = devMode;
 }, crow.debug = function() {
     crow("debug", arguments);
 }, crow.info = function() {
@@ -88,5 +94,5 @@ crow.setUrl = function(url) {
         _onFailure = func;
     }
 });
-    return crow;
-  })();
+            return crow;
+          })();
