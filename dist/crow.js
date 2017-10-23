@@ -1,4 +1,4 @@
-/*Crow Client v1.0.8*/
+/*Crow Client v1.0.9*/
 (function(factory) {
     
     // Establish the root object, window (self) in the browser, or global on the server.
@@ -32,9 +32,7 @@
 var request = function(uri, body, onSuccess, onFailure) {
     return "undefined" != typeof XMLHttpRequest ? function(uri, body) {
         var oReq = new XMLHttpRequest();
-        oReq.on("error", function(error) {
-            console.error("Error connecting to woodpecker", error);
-        }), oReq.open("POST", uri), oReq.setRequestHeader("Content-Type", "application/json"), 
+        oReq.open("POST", uri), oReq.setRequestHeader("Content-Type", "application/json"), 
         oReq.send(JSON.stringify(body));
     }(uri, body) : function(uri, body) {
         var url = require("url"), parsedUrl = url.parse(uri), http = require("https:" === parsedUrl.protocol ? "https" : "http"), options = {
