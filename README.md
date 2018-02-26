@@ -1,6 +1,6 @@
 # Crow
 
-A JS logging client meant to be used with [Woodpecker](http://helios-stash.heliosinteractive.com:7991/projects/HI/repos/woodpecker/browse).
+A JS logging client meant to be used with [Woodpecker](https://bitbucket.org/heliosinteract/woodpecker).
 
 ## Installation
 ```$xslt
