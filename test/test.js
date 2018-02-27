@@ -2,14 +2,13 @@ describe('Common JS', function(){
 
   it('should load common js format', function(){
     const crow = require('../');
-    if( typeof crow !== 'function') throw new Error('crow is not a function');
+    if( typeof crow !== 'object') throw new Error('crow is not an object');
   })
 });
 
 describe('single application support', function() {
   
   const crow = require('../');
-  
   
   it('should send log to woodpecker, with application specified', function(done) {
     crow.setUrl('http://localhost:4000/');
@@ -32,7 +31,38 @@ describe('single application support', function() {
 describe('multi application support', function() {
   const crow = require('../');
 
-  it('should send to multiple applications', function() {
+  it('should send to multiple applications using crow.createLogger', function(done) {
+    const logger1 = crow.createLogger({
+      url: 'http://localhost:4000',
+      application: 'logger1',
+    });
+    const logger2 = crow.createLogger({
+      url: 'http://localhost:4000',
+      application: 'logger2',
+    });
+    logger1.info('should send to multiple applications using crow.createLogger |||| from logger1.')
+    logger2.info('should send to multiple applications using crow.createLogger |||| from logger2.')
+    // Human, go check woodpecker log files.
+    setTimeout(done, 1000);
+  });
+
+  it('should not modify default logger when creating new logger instances', function(done) {
+    crow.configure({
+      url: 'http://localhost:4000',
+      application: 'test-crow',
+    });
+    const logger1 = crow.createLogger({
+      url: 'http://localhost:4000',
+      application: 'logger1',
+    });
+    logger1.info('should not modify default logger when creating new logger instances |||| from logger1');
+    crow.info('should not modify default logger when creating new logger instances |||| from the default crow.');
+    // Human, go check woodpecker log files.
+    setTimeout(done, 1000);
+  });
+
+  // NOTE the tests below uses transport; transport is yet to be implemented.
+  it('should send to multiple applications using transport', function() {
     const logger1 = crow.createLogger({
       transports: [
         new crow.transports.Woodpecker({
@@ -49,12 +79,12 @@ describe('multi application support', function() {
         })
       ]
     });
-    logger1.info('This log was sent from logger1.')
-    logger2.info('This log was sent from logger2.')
+    logger1.info('This log was sent from logger1. The logger was created with transport.')
+    logger2.info('This log was sent from logger2. The logger was created with transport.')
     // Human, go check woodpecker log files.
   })
 
-  it('should send to multiple transports', function() {
+  it('should send from one logger to multiple transports', function() {
     const loggerMultiTransport = crow.createLogger({transports: [
       new crow.transports.Woodpecker({
         url: 'http://localhost:4000',

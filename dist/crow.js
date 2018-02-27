@@ -57,19 +57,34 @@ var request = function(uri, body, onSuccess, onFailure) {
             onFailure(err)) : console.error(err);
         }), req.write(JSON.stringify(body)), req.end();
     }(uri, body);
-}, request, _url, _application, _onSuccess, _onFailure, _devMode = !1, crow = function(level) {
-    if (!_url && !_devMode) throw new Error("set the url for crow with crow.setUrl(<url>)");
-    if (!_application && !_devMode) throw new Error("set the application for crow with crow.setApplication(<application>)");
+}, request, Logger = function(options) {
+    this.configure(options);
+};
+
+Logger.prototype.configure = function(options) {
+    options = options || {}, this.setApplication(options.application), this.setUrl(options.url), 
+    this.setDevMode(options.devMode || !1);
+}, Logger.prototype.setApplication = function(application) {
+    this.application = application;
+}, Logger.prototype.setUrl = function(url) {
+    this.url = url;
+}, Logger.prototype.setDevMode = function(devMode) {
+    if ("boolean" != typeof devMode) return void console.warn("setDevMode accepts a boolean value only. Leaving at default of false.");
+    devMode && console.warn("Warning: Crow has been set to dev mode. Logs will not be sent to woodpecker, and will only be logged to the console. This is your only warning."), 
+    this.devMode = devMode;
+}, Logger.prototype.emit = function(level) {
+    if (!this.url && !this.devMode) throw new Error("set the url for crow with crow.setUrl(<url>)");
+    if (!this.application && !this.devMode) throw new Error("set the application for crow with crow.setApplication(<application>)");
     level || console.warn("no log level specified. Defaulting to info");
     var message = Array.from(arguments).slice(1).reduce(function(last, next) {
         return "object" != typeof next ? String.prototype.concat(last, " ", next) : String.prototype.concat(last, " ", JSON.stringify(next, null, 0));
     }, "");
     if (!message) throw new Error("log must contain a message");
-    _devMode || request(_url, {
-        application: _application,
+    this.devMode || request(this.url, {
+        application: this.application,
         level: level,
         message: message
-    }, _onSuccess, _onFailure);
+    }, this.onSuccess, this.onFailure);
     var consoleMessage = level.toUpperCase() + " - " + message;
     switch (level) {
       case "fatal":
@@ -88,34 +103,22 @@ var request = function(uri, body, onSuccess, onFailure) {
       default:
         console.log(consoleMessage);
     }
+}, Logger.prototype.debug = function() {
+    this.emit("debug", arguments);
+}, Logger.prototype.info = function() {
+    this.emit("info", arguments);
+}, Logger.prototype.log = Logger.prototype.info, Logger.prototype.warn = function() {
+    this.emit("warn", arguments);
+}, Logger.prototype.error = function() {
+    this.emit("error", arguments);
+}, Logger.prototype.fatal = function() {
+    this.emit("fatal", arguments);
 };
 
-crow.setUrl = function(url) {
-    _url = url;
-}, crow.setApplication = function(application) {
-    _application = application;
-}, crow.setDevMode = function(devMode) {
-    if ("boolean" != typeof devMode) return void console.warn("setDevMode accepts a boolean value only. Leaving at default of false.");
-    devMode && console.warn("Warning: Crow has been set to dev mode. Logs will not be sent to woodpecker, and will only be logged to the console. This is your only warning."), 
-    _devMode = devMode;
-}, crow.debug = function() {
-    crow("debug", arguments);
-}, crow.info = function() {
-    crow("info", arguments);
-}, crow.log = crow.info, crow.warn = function() {
-    crow("warn", arguments);
-}, crow.error = function() {
-    crow("error", arguments);
-}, crow.fatal = function() {
-    crow("fatal", arguments);
-}, Object.defineProperty(crow, "onSuccess", {
-    set: function(func) {
-        _onSuccess = func;
-    }
-}), Object.defineProperty(crow, "onFailure", {
-    set: function(func) {
-        _onFailure = func;
-    }
-});
+var crow = new Logger();
+
+crow.createLogger = function(options) {
+    return new Logger(options);
+};
     return crow;
   });
