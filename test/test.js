@@ -5,3 +5,67 @@ describe('Common JS', function(){
     if( typeof crow !== 'function') throw new Error('crow is not a function');
   })
 });
+
+describe('single application support', function() {
+  
+  const crow = require('../');
+  
+  
+  it('should send log to woodpecker, with application specified', function(done) {
+    crow.setUrl('http://localhost:4000/');
+    crow.setApplication('test-crow');
+    // add callback that waits for woodpecker server to finish processing log
+    crow.onSuccess = function() {
+      crow.onSuccess = undefined;
+      // HACK woodpecker would run into an error if mocha doesn't keep the script running for a bit
+      setTimeout(done, 300);
+    };
+    crow.onFailure = function(err) {
+      crow.onFailure = undefined;
+      done(new Error(err));
+    }
+    crow.info('Crow should send log to woodpecker, with application specified to test-crow');
+    // Human, go check woodpecker log files
+  })
+});
+
+describe('multi application support', function() {
+  const crow = require('../');
+
+  it('should send to multiple applications', function() {
+    const logger1 = crow.createLogger({
+      transports: [
+        new crow.transports.Woodpecker({
+          url: 'http://localhost:4000',
+          application: 'logger1',
+        })
+      ]
+    });
+    const logger2 = crow.createLogger({
+      transports: [
+        new crow.transports.Woodpecker({
+          url: 'http://localhost:4000',
+          application: 'logger2',
+        })
+      ]
+    });
+    logger1.info('This log was sent from logger1.')
+    logger2.info('This log was sent from logger2.')
+    // Human, go check woodpecker log files.
+  })
+
+  it('should send to multiple transports', function() {
+    const loggerMultiTransport = crow.createLogger({transports: [
+      new crow.transports.Woodpecker({
+        url: 'http://localhost:4000',
+        application: 'multi-transport-1'
+      }),
+      new crow.transports.Woodpecker({
+        url: 'http://localhost:4000',
+        application: 'multi-transport-1'
+      })
+    ]});
+    loggerMultiTransport.info('This log was sent from loggerMultiTransport.');
+    // Human, go check woodpecker log files
+  });
+})
