@@ -62,7 +62,7 @@ module.exports = function( grunt ) {
         options: {
         },
         files: {
-          'dist/crow.js': ['./lib/request.js', 'index.js']
+          'dist/crow.js': ['./lib/request.js', './lib/logger.js', 'index.js']
         }
       },
       crowmodule: {
@@ -73,7 +73,7 @@ module.exports = function( grunt ) {
           })();`
         },
         files: {
-          'dist/crow.module.js': ['./lib/request.js', 'index.js']
+          'dist/crow.module.js': ['./lib/request.js', './lib/logger.js', 'index.js']
         }
       },
       crowmin: {
@@ -83,7 +83,7 @@ module.exports = function( grunt ) {
           beautify: false
         },
         files: {
-          'dist/crow.min.js': ['./lib/request.js', 'index.js']
+          'dist/crow.min.js': ['./lib/request.js', './lib/logger.js', 'index.js']
         }
       }
     },
