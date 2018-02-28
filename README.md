@@ -10,43 +10,68 @@ npm install @helios-interactive/crow --save
 
 #### Node / Commonjs
 
-```
+```javascript
 var crow = require("@helios-interactive/crow");
 crow.setUrl("<url of woodpecker>");
-crow.setApplication = "<application name>";
+crow.setApplication("<application name>");
 crow.warn("A message to be logged to woodpecker")
 ```
 
 #### Browser
 
-```
+```html
 <script src="./dist/crow.min.js"></script>
 <script>
     crow.setUrl("<url of woodpecker>");
-    crow.setApplication = "<application name>";
+    crow.setApplication("<application name>");
     crow.warn("A message to be logged to woodpecker")
 </script>
 ```
 
 #### AMD
-```
+```javascript
 define(['crow'], function (crow) {
     crow.setUrl("<url of woodpecker>");
-    crow.setApplication = "<application name>";
+    crow.setApplication("<application name>");
     crow.warn("A message to be logged to woodpecker")
 });
 ```
 
 #### Module
-```
+```javascript
 import { crow } from '@helios-interactive/crow';
 
 crow.setUrl("<url of woodpecker>");
-crow.setApplication = "<application name>";
+crow.setApplication("<application name>");
 crow.warn("A message to be logged to woodpecker")
 ```
 
+### Default Logger instance & custom logger instances
+
+Crow can be used directly as a logger instance, or create additional loggers.
+This is useful if we intend to log to multiple applications or Woodpecker instance.
+
+```javascript
+var logger = crow.createLogger();
+logger.setUrl("<url of woodpecker>");
+logger.setApplication("<application name>");
+logger.warn("A message to be logged to woodpecker")
+
+```
+
 ## Methods
+
+#### createLogger(options)
+> creates a new crow logger instance.
+> You can pass in configurations as parameter.
+>
+> ##### Usage
+>
+> `var logger = crow.createLogger()`
+> `var loggerWithConfig = crow.createLogger({url: "http://localhost:4000", application: "FooBar", devMode: true})`
+
+#### configure(options)
+> configures the logger. options include woodpecker instances' url, and application name.
 
 #### setUrl(url)
 > Sets the url for crow. This should match the url for your woodpecker instance.
